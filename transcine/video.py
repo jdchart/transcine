@@ -12,5 +12,7 @@ def get_video_info(path : str) -> dict:
             return {
                 "width" : track.width,
                 "height" : track.height,
-                "duration" : track.duration
+                "duration_ms" : track.duration,
+                "frame_rate" : float(track.frame_rate),
+                "duration_s" : track.duration / 1000
             }
