@@ -3,3 +3,4 @@ venv
 build
 transcine.egg-info
 data
+models
