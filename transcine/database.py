@@ -1,11 +1,16 @@
 import duckdb
 import os
 from .utils import collect_files
-from .video import get_video_info
+from .video import get_video_info, extract_audio
+import uuid
 
 class Database:
     def __init__(self, path):
         self.path = path
+        self.media_dir = os.path.join(os.path.dirname(path), "media")
+
+        if os.path.dirname(self.media_dir) == False:
+            os.makedirs(self.media_dir, exist_ok = True)
 
         if os.path.isfile(path):
             self.db = duckdb.connect(self.path)
@@ -20,13 +25,24 @@ class Database:
         # Find path to all videos in path
         video_files = collect_files(path, [".mp4"])
 
-        # Extract info about each video
         for video_file in video_files:
-            print(get_video_info(video_file))
+            # Extract info about each video
+            video_info = get_video_info(video_file)
 
-                # Extract audio
+            # Extract audio
+            audio_file = extract_audio(video_file, self.media_dir)
 
-                # Add to database
+            # Add to database
+            self.add_entry([
+                str(uuid.uuid4()),
+                video_file,
+                audio_file,
+                os.path.basename(video_file),
+                1945,
+                video_info["duration_ms"],
+                video_info["width"],
+                video_info["height"]
+            ])
 
     def _init_db(self):
         self.db = duckdb.connect(self.path)

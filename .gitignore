@@ -2,3 +2,4 @@ venv
 .vscode
 build
 transcine.egg-info
+data

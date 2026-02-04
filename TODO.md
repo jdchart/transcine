@@ -1,8 +1,7 @@
 ## Ingestion des contenus
 
-- [ ] Base de données
-- [ ] Extraction audio
-
+- [x] Base de données
+- [x] Extraction audio
 
 ## Transcription automatique des videos
-- Input -> audio
+- [ ]
